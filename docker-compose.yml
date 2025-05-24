@@ -1,0 +1,116 @@
+version: '3.8'
+
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_API_URL=http://localhost:5000
+    depends_on:
+      fishery:
+        condition: service_healthy
+      uav:
+        condition: service_healthy
+
+  fishery:
+    build:
+      context: ./server/apps/fishery
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server/apps/fishery:/app
+      - ./server/apps/fishery/data:/app/data
+    environment:
+      - ENVIRONMENT=development
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/fishery
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  uav:
+    build:
+      context: ./server/apps/uav
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./server/apps/uav:/app
+    environment:
+      - ENVIRONMENT=development
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/uav
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  fishery-pact:
+    build:
+      context: ./tests/fishery-pact
+      dockerfile: Dockerfile
+    volumes:
+      - ./tests/fishery-pact:/app
+    environment:
+      - PACT_BROKER_URL=http://pact-broker:9292
+    depends_on:
+      - pact-broker
+
+  uav-pact:
+    build:
+      context: ./tests/uav-pact
+      dockerfile: Dockerfile
+    volumes:
+      - ./tests/uav-pact:/app
+    environment:
+      - PACT_BROKER_URL=http://pact-broker:9292
+    depends_on:
+      - pact-broker
+
+  pact-broker:
+    image: pactfoundation/pact-broker
+    ports:
+      - "9292:9292"
+    environment:
+      - PACT_BROKER_DATABASE_URL=postgresql://postgres:postgres@db:5432/pact_broker
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=fishery
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data: 

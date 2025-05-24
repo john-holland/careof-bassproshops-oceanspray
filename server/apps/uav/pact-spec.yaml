@@ -1,0 +1,40 @@
+provider:
+  name: uav
+  host: localhost
+  port: 5001
+
+consumer:
+  name: fishery
+  host: localhost
+  port: 5000
+
+interactions:
+  - description: "Fishery requests UAV deployment"
+    request:
+      method: POST
+      path: /api/uav/deploy
+      headers:
+        Content-Type: application/json
+      body:
+        location: "Sample Location"
+    response:
+      status: 200
+      headers:
+        Content-Type: application/json
+      body:
+        status: "Deployed"
+
+  - description: "Fishery requests UAV status"
+    request:
+      method: GET
+      path: /api/uav/status
+      headers:
+        Content-Type: application/json
+    response:
+      status: 200
+      headers:
+        Content-Type: application/json
+      body:
+        status: "Active"
+        battery_level: 80
+        location: "Sample Location"

@@ -1,0 +1,65 @@
+provider:
+  name: fishery
+  host: localhost
+  port: 5000
+
+consumer:
+  name: uav
+  host: localhost
+  port: 5001
+
+interactions:
+  - description: "UAV requests fishery fish data"
+    request:
+      method: GET
+      path: /api/fishery/fish
+      headers:
+        Content-Type: application/json
+    response:
+      status: 200
+      headers:
+        Content-Type: application/json
+      body:
+        - id: 1
+          species: "Sample Fish"
+          size: 10.5
+          weight: 2.3
+          caught_at: "2023-01-01T00:00:00Z"
+          location: "Sample Location"
+          is_sustainable: true
+
+  - description: "UAV requests fishery ocean health data"
+    request:
+      method: GET
+      path: /api/fishery/ocean-health
+      headers:
+        Content-Type: application/json
+    response:
+      status: 200
+      headers:
+        Content-Type: application/json
+      body:
+        - id: 1
+          temperature: 25.5
+          salinity: 35.0
+          ph_level: 8.1
+          pollution_level: 0.5
+          recorded_at: "2023-01-01T00:00:00Z"
+          location: "Sample Location"
+
+  - description: "UAV requests fishery pressure tank data"
+    request:
+      method: GET
+      path: /api/fishery/pressure-tank
+      headers:
+        Content-Type: application/json
+    response:
+      status: 200
+      headers:
+        Content-Type: application/json
+      body:
+        - id: 1
+          pressure: 100.0
+          volume: 50.0
+          last_maintenance: "2023-01-01T00:00:00Z"
+          is_operational: true

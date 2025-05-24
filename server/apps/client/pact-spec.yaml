@@ -1,0 +1,90 @@
+consumer:
+  name: client
+  host: localhost
+  port: 3000
+
+providers:
+  - name: fishery
+    host: localhost
+    port: 5000
+  - name: uav
+    host: localhost
+    port: 5001
+
+interactions:
+  - description: "Client fetches fish list from fishery"
+    provider: fishery
+    request:
+      method: GET
+      path: /api/fishery/fish
+      headers:
+        Accept: application/json
+    response:
+      status: 200
+      headers:
+        Content-Type: application/json
+      body:
+        - id: 1
+          species: "Tuna"
+          size: 10.5
+          weight: 2.3
+          caught_at: "2023-01-01T00:00:00Z"
+          location: "Pacific"
+          is_sustainable: true
+
+  - description: "Client fetches ocean health data"
+    provider: fishery
+    request:
+      method: GET
+      path: /api/fishery/ocean-health
+      headers:
+        Accept: application/json
+    response:
+      status: 200
+      headers:
+        Content-Type: application/json
+      body:
+        - id: 1
+          temperature: 25.5
+          salinity: 35.0
+          ph_level: 8.1
+          pollution_level: 0.5
+          recorded_at: "2023-01-01T00:00:00Z"
+          location: "Pacific"
+
+  - description: "Client deploys UAV"
+    provider: uav
+    request:
+      method: POST
+      path: /api/uav/deploy
+      headers:
+        Content-Type: application/json
+      body:
+        location: "Pacific"
+    response:
+      status: 200
+      headers:
+        Content-Type: application/json
+      body:
+        status: "Deployed"
+        battery_level: 100
+        location: "Pacific"
+        updated_at: "2023-01-01T00:00:00Z"
+
+  - description: "Client fetches UAV status"
+    provider: uav
+    request:
+      method: GET
+      path: /api/uav/status
+      headers:
+        Accept: application/json
+    response:
+      status: 200
+      headers:
+        Content-Type: application/json
+      body:
+        - id: 1
+          status: "Active"
+          battery_level: 80
+          location: "Pacific"
+          updated_at: "2023-01-01T00:00:00Z"

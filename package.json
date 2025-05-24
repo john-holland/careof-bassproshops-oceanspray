@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "@types/axios": "^0.9.36",
+    "@types/node": "^22.15.21",
+    "@types/react": "^19.1.5",
+    "@types/react-qr-reader": "^2.1.7",
+    "@types/react-router-dom": "^5.3.3"
+  },
+  "dependencies": {
+    "qrcode.react": "^4.2.0"
+  }
+}
