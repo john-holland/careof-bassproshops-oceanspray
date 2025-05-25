@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  pact-broker:
+    image: pactfoundation/pact-broker
+    ports:
+      - "9292:9292"
+    environment:
+      - PACT_BROKER_DATABASE_URL=postgresql://postgres:postgres@db:5432/pact_broker
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9292/diagnostic/status/heartbeat"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=pact_broker
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pact-health-check:
+    build:
+      context: ./tests/pact-health
+      dockerfile: Dockerfile
+    environment:
+      - PACT_BROKER_URL=http://pact-broker:9292
+    depends_on:
+      pact-broker:
+        condition: service_healthy 

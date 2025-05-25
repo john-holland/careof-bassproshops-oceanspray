@@ -4,6 +4,13 @@ from datetime import datetime
 
 Base = declarative_base()
 
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
+    is_active = Column(Boolean, default=True)
+
 class UAVDeployment(Base):
     __tablename__ = "uav_deployment"
     id = Column(Integer, primary_key=True)

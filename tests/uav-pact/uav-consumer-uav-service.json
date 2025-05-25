@@ -1,0 +1,370 @@
+{
+  "consumer": {
+    "name": "uav-consumer"
+  },
+  "provider": {
+    "name": "uav-service"
+  },
+  "interactions": [
+    {
+      "description": "a request for UAV deployment",
+      "providerState": "a UAV deployment exists",
+      "request": {
+        "method": "GET",
+        "path": "/api/uav/deployment/1"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "id": 1,
+          "status": "active",
+          "location": {
+            "latitude": 0.0,
+            "longitude": 0.0
+          },
+          "battery_level": 85.5
+        }
+      }
+    },
+    {
+      "description": "a request for UAV status",
+      "providerState": "UAV status data exists",
+      "request": {
+        "method": "GET",
+        "path": "/api/uav/status/1"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "id": 1,
+          "status": "flying",
+          "altitude": 100.0,
+          "speed": 15.0,
+          "battery_level": 75.0
+        }
+      }
+    },
+    {
+      "description": "a request to create a UAV deployment",
+      "providerState": "a new UAV deployment can be created",
+      "request": {
+        "method": "POST",
+        "path": "/api/uav/deployment",
+        "body": {
+          "id": 1,
+          "status": "active",
+          "location": {
+            "latitude": 0.0,
+            "longitude": 0.0
+          },
+          "battery_level": 85.5
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+        },
+        "body": {
+          "id": 1,
+          "status": "active",
+          "location": {
+            "latitude": 0.0,
+            "longitude": 0.0
+          },
+          "battery_level": 85.5
+        }
+      }
+    },
+    {
+      "description": "a request for fish",
+      "providerState": "a fish exists",
+      "request": {
+        "method": "GET",
+        "path": "/api/fish/1"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "id": 1,
+          "species": "Bass",
+          "weight": 2.5,
+          "location": {
+            "latitude": 0.0,
+            "longitude": 0.0
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for ocean health",
+      "providerState": "ocean health data exists",
+      "request": {
+        "method": "GET",
+        "path": "/api/ocean/health"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "id": 1,
+          "temperature": 22.5,
+          "ph_level": 7.2,
+          "oxygen_level": 8.5,
+          "location": {
+            "latitude": 0.0,
+            "longitude": 0.0
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a fish",
+      "providerState": "a new fish can be created",
+      "request": {
+        "method": "POST",
+        "path": "/api/fish",
+        "body": {
+          "id": 1,
+          "species": "Bass",
+          "weight": 2.5,
+          "location": {
+            "latitude": 0.0,
+            "longitude": 0.0
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+        },
+        "body": {
+          "id": 1,
+          "species": "Bass",
+          "weight": 2.5,
+          "location": {
+            "latitude": 0.0,
+            "longitude": 0.0
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a flight plan",
+      "providerState": "a valid flight plan",
+      "request": {
+        "method": "POST",
+        "path": "/flight-plans/",
+        "body": {
+          "plan_name": "Test Flight",
+          "source": "DJI",
+          "plan_data": {
+            "coordinates": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ]
+            ]
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "id": 1,
+          "plan_name": "Test Flight",
+          "source": "DJI",
+          "plan_data": {
+            "coordinates": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ]
+            ]
+          },
+          "created_at": "2025-05-25T03:21:22.710570+00:00"
+        }
+      }
+    },
+    {
+      "description": "a request to create an environmental test",
+      "providerState": "a valid environmental test",
+      "request": {
+        "method": "POST",
+        "path": "/environmental-tests/",
+        "body": {
+          "test_name": "Water Quality Test",
+          "quality_score": 85.5,
+          "notes": "Test notes"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "id": 1,
+          "test_name": "Water Quality Test",
+          "quality_score": 85.5,
+          "notes": "Test notes",
+          "test_date": "2025-05-25T03:21:22.743894+00:00"
+        }
+      }
+    },
+    {
+      "description": "a request to create a fishery",
+      "providerState": "a valid fishery",
+      "request": {
+        "method": "POST",
+        "path": "/fisheries/",
+        "body": {
+          "name": "Test Fishery",
+          "location": "Test Location",
+          "contact_info": {
+            "phone": "123-456-7890"
+          },
+          "operating_hours": {
+            "weekday": "9-5"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "id": 1,
+          "name": "Test Fishery",
+          "location": "Test Location",
+          "contact_info": {
+            "phone": "123-456-7890"
+          },
+          "operating_hours": {
+            "weekday": "9-5"
+          },
+          "created_at": "2025-05-25T03:21:22.783262+00:00",
+          "updated_at": "2025-05-25T03:21:22.783268+00:00"
+        }
+      }
+    },
+    {
+      "description": "a request to create a fish tracking entry",
+      "providerState": "a valid fish tracking entry",
+      "request": {
+        "method": "POST",
+        "path": "/fish-tracking/",
+        "body": {
+          "fish_type": "Tuna",
+          "tracking_data": {
+            "depth": 50
+          },
+          "location_lat": 35.0,
+          "location_lng": -120.0,
+          "metadata": {
+            "temperature": 18.5
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "id": 1,
+          "fish_type": "Tuna",
+          "tracking_data": {
+            "depth": 50
+          },
+          "location_lat": 35.0,
+          "location_lng": -120.0,
+          "metadata": {
+            "temperature": 18.5
+          },
+          "timestamp": "2025-05-25T03:21:22.811693+00:00"
+        }
+      }
+    },
+    {
+      "description": "a request to get flight plans",
+      "providerState": "flight plans exist",
+      "request": {
+        "method": "GET",
+        "path": "/flight-plans/"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": [
+          {
+            "id": 1,
+            "plan_name": "Test Flight",
+            "source": "DJI",
+            "plan_data": {
+              "coordinates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ]
+              ]
+            },
+            "created_at": "2025-05-25T03:21:22.843969+00:00"
+          }
+        ]
+      }
+    },
+    {
+      "description": "a request to get fisheries",
+      "providerState": "fisheries exist",
+      "request": {
+        "method": "GET",
+        "path": "/fisheries/"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": [
+          {
+            "id": 1,
+            "name": "Test Fishery",
+            "location": "Test Location",
+            "contact_info": {
+              "phone": "123-456-7890"
+            },
+            "operating_hours": {
+              "weekday": "9-5"
+            },
+            "created_at": "2025-05-25T03:21:22.871865+00:00",
+            "updated_at": "2025-05-25T03:21:22.871875+00:00"
+          }
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

@@ -1,25 +1,21 @@
 import axios from 'axios';
+import { getBaseUrl } from '../config/api';
 
-const API_URL = process.env.REACT_APP_UAV_API_URL || 'http://localhost:5001';
-
-export interface UAVDeployment {
-  location: string;
-}
-
-export interface UAVStatus {
+export interface UAV {
   id: number;
-  status: string;
+  status: 'idle' | 'deployed' | 'returning';
   battery_level: number;
   location: string;
-  updated_at: string;
+  last_maintenance: string;
+  is_operational: boolean;
 }
 
-export const deployUAV = async (deployment: UAVDeployment): Promise<UAVStatus> => {
-  const response = await axios.post<UAVStatus>(`${API_URL}/api/uav/deploy`, deployment);
+export const deployUAV = async (uavId: number): Promise<UAV> => {
+  const response = await axios.post<UAV>(`${getBaseUrl('uav')}/api/uav/${uavId}/deploy`);
   return response.data;
 };
 
-export const getUAVStatus = async (): Promise<UAVStatus[]> => {
-  const response = await axios.get<UAVStatus[]>(`${API_URL}/api/uav/status`);
+export const getUAVStatus = async (uavId: number): Promise<UAV> => {
+  const response = await axios.get<UAV>(`${getBaseUrl('uav')}/api/uav/${uavId}`);
   return response.data;
 }; 
