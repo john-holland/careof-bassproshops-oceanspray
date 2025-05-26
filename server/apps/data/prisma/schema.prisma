@@ -1,0 +1,62 @@
+model SensorReading {
+  id            Int      @id @default(autoincrement())
+  sensor_id     String
+  timestamp     DateTime
+  value         Float
+  type          String   // PYR, CURRENT, TEMPERATURE, PH
+  location_x    Float
+  location_y    Float
+  location_z    Float
+  orientation   String?  // UP, DOWN, SIDE
+  is_registered Boolean  @default(false)
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  @@index([sensor_id])
+  @@index([timestamp])
+}
+
+model CurrentChange {
+  id            Int      @id @default(autoincrement())
+  tank_id       Int
+  timestamp     DateTime
+  value         Float
+  duration      Int      // milliseconds
+  is_temporary  Boolean
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  @@index([tank_id])
+  @@index([timestamp])
+}
+
+model FeedingSchedule {
+  id            Int      @id @default(autoincrement())
+  tank_id       Int
+  species       String
+  schedule      Json     // { times: string[], amount: number, type: string }
+  last_fed      DateTime
+  next_feeding  DateTime
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  @@unique([tank_id, species])
+  @@index([tank_id])
+  @@index([next_feeding])
+}
+
+model HealthCheck {
+  id            Int      @id @default(autoincrement())
+  tank_id       Int
+  timestamp     DateTime
+  species       String
+  metrics       Json     // { temperature, ph, oxygen, ammonia, nitrite, nitrate }
+  status        String   // HEALTHY, WARNING, CRITICAL
+  notes         String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  @@index([tank_id])
+  @@index([timestamp])
+  @@index([status])
+} 

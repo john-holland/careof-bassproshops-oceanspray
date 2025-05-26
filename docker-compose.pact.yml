@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  fishery-mock:
+    image: pactfoundation/pact-mock-service
+    ports:
+      - "1234:1234"
+    command: /app/pact-mock-service --pact-dir /pacts --pact-specification-version 2.0.0 --consumer fishery-consumer --provider fishery-service
+
+  uav-mock:
+    image: pactfoundation/pact-mock-service
+    ports:
+      - "1235:1234"
+    command: /app/pact-mock-service --pact-dir /pacts --pact-specification-version 2.0.0 --consumer uav-consumer --provider uav-service 
