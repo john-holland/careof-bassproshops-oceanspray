@@ -2,12 +2,16 @@
 
 A comprehensive simulation system for deep sea fish farming, incorporating pressure control, environmental monitoring, and investment tracking.
 
+Local fishing workforce lower intake and receive kickbacks while letting fish populations resurface, and sensible vouchers for investment with Tuna at $1,000,000+ a pop...
+
+Sea health & weather readings for realistic populations and UAV release and maintenance provide further jobs.
+
 ## Components
 
 ### 1. Pressure Tank System
 - Static weight hanger system for pressure control
 - Pressure gradient simulation
-- Faraday cage for magnetic field control
+- Faraday cage for magnetic field control for fish sanity & spawning
 - Multi-level pressure lock system
 
 ### 2. Environmental Monitoring
@@ -24,6 +28,7 @@ A comprehensive simulation system for deep sea fish farming, incorporating press
 
 ### 4. Investment System
 - Fish stock tracking
+- Local fishermen keep flavor and population by sending back readings
 - Annuity calculations
 - Distribution management
 - ROI projections
