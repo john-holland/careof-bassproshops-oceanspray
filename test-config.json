@@ -1,0 +1,40 @@
+{
+  "testFiles": {
+    "tests/fishery-pact/test_fishery_pact.py": {
+      "type": "pytest",
+      "framework": "pact",
+      "service": "fishery",
+      "command": "cd tests/fishery-pact && python -m pytest test_fishery_pact.py -v"
+    },
+    "tests/fishery-pact/test_fishery_consumer.py": {
+      "type": "pytest",
+      "framework": "pact",
+      "service": "fishery",
+      "command": "cd tests/fishery-pact && python -m pytest test_fishery_consumer.py -v"
+    },
+    "tests/uav-pact/test_uav_pact.py": {
+      "type": "pytest",
+      "framework": "pact",
+      "service": "uav",
+      "command": "cd tests/uav-pact && python -m pytest test_uav_pact.py -v"
+    },
+    "tests/uav-pact/test_uav_provider.py": {
+      "type": "pytest",
+      "framework": "pact",
+      "service": "uav",
+      "command": "cd tests/uav-pact && python -m pytest test_uav_provider.py -v"
+    },
+    "client/e2e/pact.spec.ts": {
+      "type": "jest",
+      "framework": "pact",
+      "service": "client",
+      "command": "cd client && npm test -- e2e/pact.spec.ts"
+    },
+    "server/apps/data/src/tests/pact.setup.ts": {
+      "type": "jest",
+      "framework": "pact",
+      "service": "data",
+      "command": "cd server/apps/data && npm test -- src/tests/pact.setup.ts"
+    }
+  }
+} 

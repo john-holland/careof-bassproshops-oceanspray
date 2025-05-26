@@ -1,0 +1,34 @@
+{
+  "testFiles": {
+    "tests/fishery-pact/test_fishery_pact.py": {
+      "type": "pytest",
+      "framework": "pact",
+      "service": "fishery"
+    },
+    "tests/fishery-pact/test_fishery_consumer.py": {
+      "type": "pytest",
+      "framework": "pact",
+      "service": "fishery"
+    },
+    "tests/uav-pact/test_uav_pact.py": {
+      "type": "pytest",
+      "framework": "pact",
+      "service": "uav"
+    },
+    "tests/uav-pact/test_uav_provider.py": {
+      "type": "pytest",
+      "framework": "pact",
+      "service": "uav"
+    },
+    "client/e2e/pact.spec.ts": {
+      "type": "jest",
+      "framework": "pact",
+      "service": "client"
+    },
+    "server/apps/data/src/tests/pact.setup.ts": {
+      "type": "jest",
+      "framework": "pact",
+      "service": "data"
+    }
+  }
+}

@@ -12,6 +12,18 @@ GRANT ALL PRIVILEGES ON DATABASE pact_broker TO postgres;
 -- Connect to the UAV database
 \c uav;
 
+-- Create users table
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    hashed_password VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL DEFAULT 'USER',
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Create tables for UAV data
 
 -- Flight Plans (DJI and SwellPro)
@@ -39,6 +51,7 @@ CREATE TABLE fisheries (
     location VARCHAR(255) NOT NULL,
     contact_info JSONB,
     operating_hours JSONB,
+    user_id INTEGER REFERENCES users(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -50,8 +63,22 @@ CREATE TABLE fish_tracking (
     tracking_data JSONB NOT NULL,
     location_lat FLOAT NOT NULL,
     location_lng FLOAT NOT NULL,
+    fish_id INTEGER REFERENCES fish(id),
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     metadata JSONB
+);
+
+-- Fish table
+CREATE TABLE fish (
+    id SERIAL PRIMARY KEY,
+    species VARCHAR(100) NOT NULL,
+    weight DECIMAL(10,2) NOT NULL,
+    length DECIMAL(10,2) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    status VARCHAR(50) DEFAULT 'active',
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Achievements
@@ -62,7 +89,7 @@ CREATE TABLE achievements (
     criteria JSONB NOT NULL,
     points INTEGER DEFAULT 0,
     achieved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    user_id INTEGER
+    user_id INTEGER REFERENCES users(id)
 );
 
 -- Stalls

@@ -360,6 +360,51 @@
           }
         ]
       }
+    },
+    {
+      "description": "a request for fish data",
+      "providerState": "fish data exists",
+      "request": {
+        "method": "GET",
+        "path": "/api/fish/1"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "id": 1,
+          "species": "Bass",
+          "weight": 2.5,
+          "location": {
+            "latitude": 0.0,
+            "longitude": 0.0
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for ocean health data",
+      "providerState": "ocean health data exists",
+      "request": {
+        "method": "GET",
+        "path": "/api/ocean/health"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "id": 1,
+          "temperature": 22.5,
+          "ph_level": 7.2,
+          "oxygen_level": 8.5,
+          "location": {
+            "latitude": 0.0,
+            "longitude": 0.0
+          }
+        }
+      }
     }
   ],
   "metadata": {
